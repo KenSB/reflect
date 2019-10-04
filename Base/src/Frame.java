@@ -6,9 +6,15 @@ public class Frame extends JPanel implements ActionListener, KeyListener, MouseL
 
     public Frame(){
         setPreferredSize(new Dimension(1920,1280));
+        setBackground(Color.BLACK);
         addKeyListener(this);
         addMouseListener(this);
         this.setFocusable(true);
+    }
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setColor(Color.WHITE);
+        g.fill3DRect(0,0,50,50,true);
     }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {}

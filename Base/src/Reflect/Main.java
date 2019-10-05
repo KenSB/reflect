@@ -1,3 +1,5 @@
+package Reflect;
+
 import javax.swing.*;
 
 public class Main {
@@ -7,6 +9,5 @@ public class Main {
         frame.add(gameFrame);
         frame.pack();
         frame.setVisible(true);
-    }
-//    THE TRUE MAIN
+    }//    THE TRUE MAIN
 }

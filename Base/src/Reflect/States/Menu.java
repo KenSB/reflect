@@ -1,5 +1,7 @@
 package Reflect.States;
 
+import Reflect.Entities.Entity;
+
 import java.awt.*;
 
 public class Menu extends State{
@@ -8,7 +10,7 @@ public class Menu extends State{
     }
 
     @Override
-    public void draw(Graphics g) {
-
-    }
+    public void keyPressed(int key) {}
+    @Override
+    public void draw(Graphics g) {}
 }

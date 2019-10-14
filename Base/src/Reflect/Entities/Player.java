@@ -1,23 +1,47 @@
 package Reflect.Entities;
 
+import Reflect.States.State;
+
 import java.awt.*;
+import java.util.Iterator;
 
 public class Player extends Entity implements Animatable{
-    private int direction = 0;
-    public Player(int xPos, int yPos) {
-        super(xPos, yPos);
+    public Player(int xPos, int yPos, State stage) {
+        super(xPos, yPos, stage);
     }
 
     @Override
-    public void collision() {}
-    @Override
-    public void move() {
-        if(direction != 0){
-            changePos();
+    public boolean collision(int direction) {
+        Entity entity;
+        for (Iterator it = stage.getEntitiesIterator(); it.hasNext(); ) {
+            entity = (Entity)it.next();
+            if(direction == UP){
+                if(yPos - 1 == entity.getYPos() && xPos == entity.getXPos())
+                    return true;
+            }
+            else if(direction == DOWN){
+                if(yPos + 1 == entity.getYPos() && xPos == entity.getXPos())
+                    return true;
+            }
+            else if(direction == RIGHT){
+                if(xPos + 1 == entity.getXPos() && yPos == entity.getYPos())
+                    return true;
+            }
+            else if(direction == LEFT){
+                if(xPos - 1 == entity.getXPos() && yPos == entity.getYPos())
+                    return true;
+            }
         }
+        return false;
     }
 
-    private void changePos(){
+    @Override
+    public void move(int direction) {
+        if(!collision(direction))
+            changePos(direction);
+    }
+
+    private void changePos(int direction){
         if(direction == UP)
             yPos -= 1;
         else if(direction == DOWN)
@@ -32,6 +56,7 @@ public class Player extends Entity implements Animatable{
     }
     @Override
     public void draw(Graphics g) {
-        g.draw3DRect(xPos, yPos, 50, 50, true);
+        g.setColor(Color.BLUE);
+        g.fill3DRect(xPos*dimension, yPos*dimension, 50, 50, true);
     }
 }

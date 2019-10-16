@@ -8,14 +8,13 @@ import java.awt.event.*;
 import java.io.IOException;
 
 public class Frame extends JPanel implements ActionListener, KeyListener, MouseListener {
-    State currentState = new Level("Reflect/level1","C:\\Users\\KenSB\\IdeaProjects\\reflect\\Base\\src\\Reflect\\level1");
+    State currentState = new Level("Reflect/level1","C:\\Users\\KenSB\\IdeaProjects\\reflect\\Base\\src\\Reflect\\level1", this);
     public Frame() throws IOException {
         setPreferredSize(new Dimension(1920,1280));
         setBackground(Color.BLACK);
         addKeyListener(this);
         addMouseListener(this);
         this.setFocusable(true);
-//        ((Level)currentState).addEntity(new Player(50,50));
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -30,7 +29,7 @@ public class Frame extends JPanel implements ActionListener, KeyListener, MouseL
     public void keyPressed(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
         currentState.keyPressed(keyCode);
-        repaint();
+//        repaint();
     }
     @Override
     public void keyReleased(KeyEvent keyEvent) {}

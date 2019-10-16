@@ -4,6 +4,7 @@ import Reflect.Entities.Entity;
 import Reflect.Entities.Player;
 import Reflect.Entities.Wall;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -15,9 +16,10 @@ public class Level extends State{
     final int gridX = 10;
     final int gridY = 25;
     private Player player;
+    private ArrayList<Entity> animated = new ArrayList<>();
 
-    public Level(String name, String file) throws IOException {
-        super(name);
+    public Level(String name, String file, JPanel frame) throws IOException {
+        super(name, frame);
         BufferedReader reader = new BufferedReader(new FileReader(new File(file)));
         String currentLine;
         char currentChar;
@@ -53,16 +55,16 @@ public class Level extends State{
         System.out.println(player.getXPos()+" "+player.getYPos());
         switch(key){
             case KeyEvent.VK_W:
-                player.move(1);
+                player.move(1,1);
                 break;
             case KeyEvent.VK_A:
-                player.move(4);
+                player.move(4,1);
                 break;
             case KeyEvent.VK_S:
-                player.move(2);
+                player.move(2,1);
                 break;
             case KeyEvent.VK_D:
-                player.move(3);
+                player.move(3,1);
                 break;
         }
     }

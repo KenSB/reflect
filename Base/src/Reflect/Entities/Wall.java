@@ -1,18 +1,18 @@
 package Reflect.Entities;
 
-import Reflect.States.State;
+import Reflect.States.Level;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Wall extends Entity {
-    public Wall(int xPos, int yPos, State stage) {
-        super(xPos, yPos, stage, false);
+    public Wall(int xPos, int yPos, Level level) {
+        super(xPos, yPos, level, false);
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(Color.darkGray);
         g.fill3DRect(xGrid*dimension, yGrid*dimension, 50, 50, true);
     }
 

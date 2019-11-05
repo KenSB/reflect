@@ -1,31 +1,36 @@
 package Reflect.Entities;
 import Reflect.Drawable;
-import Reflect.States.State;
+import Reflect.States.Level;
 
 public abstract class Entity implements Drawable, Animatable {
     final int UP = 1;
     final int DOWN = 2;
     final int RIGHT = 3;
     final int LEFT = 4;
+    final int UPRIGHT = 5;
+    final int UPLEFT = 6;
+    final int DOWNRIGHT = 7;
+    final int DOWNLEFT = 8;
+
     final int dimension = 50;
 
     int xGrid;
     int yGrid;
     int xDraw;
     int yDraw;
-    State stage;
+    Level level;
 
     EntityAnimationTimer animator;
     boolean animate = false;
     int movingDistance = 0;
-    int movingDirection = 0;
+    int movingDirection = 1;
 
-    public Entity(int xGrid, int yGrid, State stage, boolean animate){
+    public Entity(int xGrid, int yGrid, Level level, boolean animate){
         this.xGrid = xGrid;
         this.yGrid = yGrid;
-        this.stage = stage;
+        this.level = level;
         if(animate) {
-            animator = new EntityAnimationTimer(this, stage.frame);
+            animator = new EntityAnimationTimer(this, level.frame);
             animator.start();
         }
     }
@@ -34,6 +39,7 @@ public abstract class Entity implements Drawable, Animatable {
 
     public int getXPos() {return xGrid;}
     public int getYPos() {return yGrid; }
+    public boolean getAnimate(){return animate; }
 
     void changePos(int direction, int distance){
         if(direction == UP)

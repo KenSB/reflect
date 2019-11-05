@@ -34,10 +34,11 @@ public class EntityAnimationTimer extends Thread{
                         entity.animate = false;
                         segment = 1;
                         entity.changePos(entity.movingDirection, entity.movingDistance);
+                        entity.level.update();
                     }
                     segment++;
+                    frame.repaint();
                 }
-                frame.repaint();
                 sleep(15);
             } catch (InterruptedException e) {
                 System.out.println("Exception is caught");

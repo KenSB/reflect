@@ -8,9 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
+
 
 
 public class Level extends State{
@@ -22,19 +21,23 @@ public class Level extends State{
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Entity> spawn = new ArrayList<>();
     private ArrayList<Entity> remove = new ArrayList<>();
-
+    private Dictionary links;
     boolean updating;
 
 
 
-    public Level(String name, String file, JPanel frame) throws IOException {
+    public Level(String name, String levelFile, String linkFile, JPanel frame) throws IOException {
         super(name, frame);
-        BufferedReader reader = new BufferedReader(new FileReader(new File(file)));
+        BufferedReader reader1 = new BufferedReader(new FileReader(new File(levelFile)));
+        BufferedReader reader2 = new BufferedReader(new FileReader(new File(linkFile)));
         String currentLine;
         char currentChar;
         int y = 0;
         Entity store;
-        while ((currentLine = reader.readLine()) != null) {
+        Optional<Entity> entity;
+        ArrayList<Entity> linked;
+        Map<Character, ArrayList<Entity>> links = new HashMap<>();
+        while ((currentLine = reader1.readLine()) != null) {
             for(int x = 0; x < gridX; x++) {
                 currentChar = currentLine.charAt(x);
                 if (currentChar != '0'){
@@ -47,6 +50,34 @@ public class Level extends State{
             }
             y++;
         }
+        y = 0;
+        while ((currentLine = reader2.readLine()) != null) {
+            for(int x = 0; x < gridX; x++) {
+                currentChar = currentLine.charAt(x);
+                if (currentChar != '0'){
+                    entity = getEntity(x, y);
+                    if(links.containsKey(currentChar)) {
+                            links.get(currentChar).add(entity.get());
+                    }
+                    else{
+                            links.put(currentChar,new ArrayList<>());
+                            links.get(currentChar).add(entity.get());
+                    }
+                }
+            }
+            y++;
+        }
+        for (Map.Entry<Character, ArrayList<Entity>> link : links.entrySet()) {
+            linked = link.getValue();
+            if(linked.get(0) instanceof Linkable){
+                ((Linkable) linked.get(0)).link(linked.get(1));
+            }
+            if(linked.get(1) instanceof Linkable){
+                ((Linkable) linked.get(1)).link(linked.get(0));
+            }
+        }
+        reader1.close();
+        reader2.close();
     }
 
     private Entity createEntity(char entity, int x, int y){
@@ -61,6 +92,10 @@ public class Level extends State{
                 return new Mirror(x,y,this,0);
             case 'B':
                 return new Box(x, y,this);
+            case 'L':
+                return new LightSwitch(x, y, this);
+            case 'D':
+                return new Door(x, y, this);
         }
         return null;
     }

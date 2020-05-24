@@ -82,10 +82,6 @@ public class Source extends Entity implements Interactable{
                        mirrorHit = (Mirror) entity.get();
                    blocked = true;
                 }
-                else if(entity.get() instanceof LightSwitch){
-                    ((LightSwitch) entity.get()).interact();
-                    blocked = true;
-                }
                 else
                     blocked = true;
             }

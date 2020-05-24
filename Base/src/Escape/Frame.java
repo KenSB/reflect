@@ -8,7 +8,10 @@ import java.awt.event.*;
 import java.io.IOException;
 
 public class Frame extends JPanel implements ActionListener, KeyListener, MouseListener {
-    State currentState = new Level("Reflect/level1","C:\\Users\\KenSB\\IdeaProjects\\reflect\\Base\\src\\Reflect\\level1", this);
+    State currentState = new Level("Reflect/level1",
+            "C:\\Users\\kenne\\AndroidStudioProjects\\reflect\\Base\\src\\Escape\\level1",
+            "C:\\Users\\kenne\\AndroidStudioProjects\\reflect\\Base\\src\\Escape\\level1link",
+            this);
     public Frame() throws IOException {
         setPreferredSize(new Dimension(1900,1280));
         setBackground(Color.BLACK);
